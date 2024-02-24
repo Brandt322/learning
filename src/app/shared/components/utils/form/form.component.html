@@ -1,0 +1,65 @@
+<div class="mx-4 md:w-[620px] md:mx-auto">
+  <div>
+    <form [formGroup]="myForm" (ngSubmit)="onSave()">
+      <div class="grid gap-2">
+        <label class="text-gray-500 font-medium leading-tight">Nombre</label>
+        <input
+          type="text"
+          class="p-2 border rounded-md border-blue-400 bg-slate-200"
+          formControlName="name"
+        />
+        <span *ngIf="isvalidField('name')" class="text-red-500 font-medium">{{
+          getFieldError("name")
+        }}</span>
+
+        <label class="text-gray-500 font-medium leading-tight">Apellido</label>
+        <input
+          type="text"
+          class="p-2 border rounded-md border-blue-400 bg-slate-200"
+          formControlName="lastname"
+        />
+        <span
+          *ngIf="isvalidField('lastname')"
+          class="text-red-500 font-medium"
+          >{{ getFieldError("lastname") }}</span
+        >
+
+        <label class="text-gray-500 font-medium leading-tight">Ocupación</label>
+        <input
+          type="text"
+          class="p-2 border rounded-md border-blue-400 bg-slate-200"
+          formControlName="stack"
+        />
+        <span *ngIf="isvalidField('stack')" class="text-red-500 font-medium">{{
+          getFieldError("stack")
+        }}</span>
+
+        <label class="text-gray-500 font-medium leading-tight">Carrera</label>
+        <input
+          type="text"
+          class="p-2 border rounded-md border-blue-400 bg-slate-200"
+          formControlName="career"
+        />
+        <span *ngIf="isvalidField('career')" class="text-red-500 font-medium">{{
+          getFieldError("career")
+        }}</span>
+
+        <label class="text-gray-500 font-medium leading-tight">Edad</label>
+        <input
+          type="number"
+          class="p-2 border rounded-md border-blue-400 bg-slate-200"
+          formControlName="year"
+        />
+        <span *ngIf="isvalidField('year')" class="text-red-500 font-medium">{{
+          getFieldError("year")
+        }}</span>
+        <button
+          type="submit"
+          class="text-slate-700 font-medium p-4 border rounded-md border-blue-400 bg-slate-200 hover:bg-slate-300 w-1/2 mx-auto"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
