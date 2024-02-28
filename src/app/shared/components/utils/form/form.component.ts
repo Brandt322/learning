@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -9,11 +9,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class FormComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) { }
+
   myForm!: FormGroup;
   @Output() dataEmitter = new EventEmitter<any[]>();
   data: any[] = []
+  technicallSkillsNumber: number[] = []
+
   ngOnInit(): void {
     this.buildForm()
+    this.addNewTechnicallSkill()
   }
 
   buildForm() {
@@ -23,7 +27,21 @@ export class FormComponent implements OnInit {
       stack: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       career: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       year: [0, [Validators.required, Validators.min(17), Validators.max(100)]],
+      technicallSkill: this.formBuilder.array([])
     })
+  }
+
+  addNewTechnicallSkill() {
+    this.technicallSkillsNumber.push(this.technicallSkillsNumber.length)
+    const control = this.myForm.controls['technicallSkill'] as FormArray;
+    control.push(this.formBuilder.group({
+      skill: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      years: [0, [Validators.required, Validators.min(1)]]
+    }))
+  }
+
+  get technicalSkills(): FormArray {
+    return this.myForm.get('technicallSkill') as FormArray;
   }
 
   onSave() {
@@ -31,7 +49,7 @@ export class FormComponent implements OnInit {
       console.log(this.myForm.value);
       this.data.push(this.myForm.value);
       this.dataEmitter.emit(this.data);
-      console.log(this.data);
+      // console.log(this.data);
     }
 
     if (this.myForm.invalid) {
@@ -41,14 +59,34 @@ export class FormComponent implements OnInit {
   }
 
   isvalidField(field: string): boolean | null {
-    return this.myForm.controls[field].errors
-      && this.myForm.controls[field].touched
+    let control: AbstractControl | null;
+    if (field.includes('.')) {
+      const [arrayName, arrayIndex, controlName] = field.split('.');
+      const index = Number(arrayIndex);
+      if (isNaN(index)) return false;
+      control = ((this.myForm.get(arrayName) as FormArray).controls[index] as FormGroup).get(controlName);
+    } else {
+      control = this.myForm.get(field);
+    }
+    return (control?.touched && control?.invalid) ?? false;
   }
 
   getFieldError(field: string): string | null {
-    if (!this.myForm.controls[field]) return null
+    let control: AbstractControl | null;
+    let fieldName = field;
+    if (field.includes('.')) {
+      const [arrayName, arrayIndex, controlName] = field.split('.');
+      const index = Number(arrayIndex);
+      if (isNaN(index)) return null;
+      control = ((this.myForm.get(arrayName) as FormArray).controls[index] as FormGroup).get(controlName);
+      fieldName = controlName;
+    } else {
+      control = this.myForm.get(field);
+    }
 
-    const errors = this.myForm.controls[field].errors || {}
+    if (!control) return null;
+
+    const errors = control.errors || {};
 
     for (const key of Object.keys(errors)) {
       switch (key) {
@@ -59,7 +97,11 @@ export class FormComponent implements OnInit {
         case 'maxlength':
           return "Debe tener máximo 20 letras"
         case 'min':
-          return "Debe tener minimo 17 años"
+          if (field.startsWith('technicallSkill.') && field.endsWith('.years')) {
+            return `Minimo ${errors['min'].min} año`;
+          } else {
+            return `Debe tener mínimo ${errors['min'].min} años`;
+          }
         case 'max':
           return "Debe tener maximo 100 años"
         default:

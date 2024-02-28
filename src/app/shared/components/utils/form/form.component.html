@@ -53,6 +53,55 @@
         <span *ngIf="isvalidField('year')" class="text-red-500 font-medium">{{
           getFieldError("year")
         }}</span>
+        <h3 class="text-slate-800 font-semibold text-2xl mt-2">
+          Habilidades tecnicas
+        </h3>
+        <div class="grid gap-4" formArrayName="technicallSkill">
+          <div
+            class="grid gap-4"
+            *ngFor="
+              let technicalSkill of technicalSkills.controls;
+              let i = index
+            "
+            [formGroupName]="i"
+          >
+            <!-- Your code here -->
+            <label class="text-gray-500 font-medium leading-tight">Skill</label>
+            <input
+              [id]="'habilidad-tecnica-' + i"
+              type="text"
+              class="p-2 border rounded-md border-blue-400 bg-slate-200"
+              formControlName="skill"
+            />
+
+            <span
+              *ngIf="isvalidField('technicallSkill.' + i + '.skill')"
+              class="text-red-500 font-medium"
+              >{{ getFieldError("technicallSkill." + i + ".skill") }}</span
+            >
+
+            <label class="text-gray-500 font-medium leading-tight">Años</label>
+            <input
+              [id]="'anios-habilidad-tecnica-' + i"
+              type="number"
+              class="p-2 border rounded-md border-blue-400 bg-slate-200"
+              formControlName="years"
+            />
+
+            <span
+              *ngIf="isvalidField('technicallSkill.' + i + '.years')"
+              class="text-red-500 font-medium"
+              >{{ getFieldError("technicallSkill." + i + ".years") }}</span
+            >
+          </div>
+          <button
+            type="button"
+            class="text-slate-700 font-medium mt-4 p-4 border rounded-md border-blue-400 bg-slate-200 hover:bg-slate-300 w-1/2 mx-auto"
+            (click)="addNewTechnicallSkill()"
+          >
+            + Agregar una nueva habilidad
+          </button>
+        </div>
         <button
           type="submit"
           class="text-slate-700 font-medium p-4 border rounded-md border-blue-400 bg-slate-200 hover:bg-slate-300 w-1/2 mx-auto"
