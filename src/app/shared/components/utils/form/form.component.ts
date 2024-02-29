@@ -17,7 +17,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm()
-    this.addNewTechnicallSkill()
+    // this.addNewTechnicallSkill()
   }
 
   buildForm() {
@@ -29,8 +29,27 @@ export class FormComponent implements OnInit {
       year: [0, [Validators.required, Validators.min(17), Validators.max(100)]],
       cellphoneNumber: this.formBuilder.array([this.createCellphoneNumber()]),
       technicallSkill: this.formBuilder.array([]),
-      softSkill: this.formBuilder.array([])
+      // softSkill: this.formBuilder.array([])
     })
+  }
+
+  addNewTechnicallSkill() {
+    console.log('length: ' + this.technicallSkillsNumber.length, 'valor de indice: ' + this.technicallSkillsNumber.map(element => element))
+    this.technicallSkillsNumber.push(this.technicallSkillsNumber.length) //aqui se crea el template
+    console.log('length: ' + this.technicallSkillsNumber.length, 'valor de indice: ' + this.technicallSkillsNumber.map(element => element))
+
+    const control = this.myForm.controls['technicallSkill'] as FormArray;
+    control.push(this.formBuilder.group({ //aqui se vincula el template con los controls del array de technicallSkill
+      skill: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      years: [0, [Validators.required, Validators.min(1)]]
+    }))
+    console.log('length: ' + this.technicallSkillsNumber.length, 'valor de indice: ' + this.technicallSkillsNumber.map(element => element))
+  }
+
+  deleteLastTechnicallSkill() {
+    this.technicallSkillsNumber.pop()
+    const control = this.myForm.controls['technicallSkill'] as FormArray;
+    control.removeAt(control.length - 1)
   }
 
   createCellphoneNumber(): FormGroup {
@@ -48,20 +67,6 @@ export class FormComponent implements OnInit {
     return this.myForm.get('technicallSkill') as FormArray;
   }
 
-  addNewTechnicallSkill() {
-    this.technicallSkillsNumber.push(this.technicallSkillsNumber.length)
-    const control = this.myForm.controls['technicallSkill'] as FormArray;
-    control.push(this.formBuilder.group({
-      skill: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      years: [0, [Validators.required, Validators.min(1)]]
-    }))
-  }
-
-  deleteLastTechnicallSkill() {
-    this.technicallSkillsNumber.pop()
-    const control = this.myForm.controls['technicallSkill'] as FormArray;
-    control.removeAt(control.length - 1)
-  }
 
 
   onSave() {
