@@ -53,6 +53,52 @@
         <span *ngIf="isvalidField('year')" class="text-red-500 font-medium">{{
           getFieldError("year")
         }}</span>
+
+        <div class="grid mt-2" formArrayName="cellphoneNumber">
+          <div
+            class="grid gap-4"
+            *ngFor="let item of cellphoneNumber.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="flex justify-between gap-2">
+              <div class="flex flex-col justify-start flex-grow gap-2">
+                <label class="text-gray-500 font-medium leading-tight"
+                  >Prefijo</label
+                >
+                <input
+                  [id]="'prefijo-' + i"
+                  type="text"
+                  class="p-2 border rounded-md border-blue-400 bg-slate-200"
+                  formControlName="prefijo"
+                />
+                <span
+                  *ngIf="isvalidField('cellphoneNumber.' + i + '.prefijo')"
+                  class="text-red-500 font-medium"
+                  >{{
+                    getFieldError("cellphoneNumber." + i + ".prefijo")
+                  }}</span
+                >
+              </div>
+              <div class="flex flex-col justify-start flex-grow gap-2">
+                <label class="text-gray-500 font-medium leading-tight"
+                  >Numero de telefono</label
+                >
+                <input
+                  [id]="'number-' + i"
+                  type="text"
+                  class="p-2 border rounded-md border-blue-400 bg-slate-200"
+                  formControlName="number"
+                />
+                <span
+                  *ngIf="isvalidField('cellphoneNumber.' + i + '.number')"
+                  class="text-red-500 font-medium"
+                  >{{ getFieldError("cellphoneNumber." + i + ".number") }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
         <h3 class="text-slate-800 font-semibold text-2xl mt-2">
           Habilidades tecnicas
         </h3>
@@ -94,17 +140,27 @@
               >{{ getFieldError("technicallSkill." + i + ".years") }}</span
             >
           </div>
-          <button
-            type="button"
-            class="text-slate-700 font-medium mt-4 p-4 border rounded-md border-blue-400 bg-slate-200 hover:bg-slate-300 w-1/2 mx-auto"
-            (click)="addNewTechnicallSkill()"
-          >
-            + Agregar una nueva habilidad
-          </button>
+          <div class="flex justify-center gap-4">
+            <button
+              type="button"
+              class="text-slate-50 font-medium mt-4 p-4 border rounded-md border-blue-400 bg-green-600 hover:bg-green-700 w-1/2 mx-auto"
+              (click)="addNewTechnicallSkill()"
+            >
+              + Agregar una nueva habilidad
+            </button>
+            <button
+              type="button"
+              class="text-slate-50 font-medium mt-4 p-4 border rounded-md border-blue-400 bg-green-600 hover:bg-green-700 w-1/2 mx-auto"
+              (click)="deleteLastTechnicallSkill()"
+              *ngIf="technicallSkillsNumber.length > 1; disabled"
+            >
+              + Eliminar habilidad
+            </button>
+          </div>
         </div>
         <button
           type="submit"
-          class="text-slate-700 font-medium p-4 border rounded-md border-blue-400 bg-slate-200 hover:bg-slate-300 w-1/2 mx-auto"
+          class="text-slate-50 font-medium p-4 border rounded-md border-blue-400 bg-green-600 hover:bg-green-700 w-1/2 mx-auto"
         >
           Enviar
         </button>
