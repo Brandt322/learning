@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { SharedInfoService } from 'src/app/services/shared-info.service';
 import { Products } from 'src/app/shared/models/products';
@@ -17,7 +18,11 @@ export class ProductComponent implements OnInit {
   }
 
   getProducts() {
-    this.productService.getProducts().subscribe(data => {
+    this.productService.getProducts().pipe(
+      catchError(error => {
+        return throwError(() => error);
+      })
+    ).subscribe(data => {
       console.log(data)
       this.products = data.slice(0, 10);
     })
