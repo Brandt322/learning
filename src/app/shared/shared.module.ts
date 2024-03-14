@@ -7,10 +7,11 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 import { DashboardComponent } from './components/layout/dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './components/utils/form/form.component';
+import { ProductComponent } from './components/utils/product/product.component';
 
 @NgModule({
-  declarations: [HeaderComponent, MainComponent, CardComponent, FooterComponent, DashboardComponent, FormComponent],
+  declarations: [HeaderComponent, MainComponent, CardComponent, FooterComponent, DashboardComponent, FormComponent, ProductComponent],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  exports: [HeaderComponent, MainComponent, CardComponent, FooterComponent, DashboardComponent, FormComponent],
+  exports: [HeaderComponent, MainComponent, CardComponent, FooterComponent, DashboardComponent, FormComponent, ProductComponent],
 })
 export class SharedModule { }

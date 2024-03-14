@@ -1,0 +1,25 @@
+<div class="grid gap-2 grid-cols-2">
+  <div class="col-span-1 grid gap-4">
+    <div
+      *ngFor="let product of products"
+      class="grid gap-2 border rounded-md border-green-500 p-2"
+    >
+      <h1>{{ product.title }}</h1>
+      <img [src]="product.images[0]" [alt]="product.title" class="h-28" />
+      <div>
+        <p>{{ product.description }}</p>
+        <span>{{ product.price }}</span>
+      </div>
+      <div class="w-32">
+        <button
+          type="button"
+          class="w-full rounded-md border bg-green-500 cursor-pointer hover:bg-slate-500"
+          (click)="addProductToCart(product)"
+        >
+          Añadir producto
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1">asdsad</div>
+</div>

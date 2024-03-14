@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedInfoService } from 'src/app/services/shared-info.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  myCart$ = this.sharedInfoService.mycart$;
+
+  constructor(private sharedInfoService: SharedInfoService) { }
+
 
   ngOnInit(): void {
   }

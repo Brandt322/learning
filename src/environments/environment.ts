@@ -5,5 +5,6 @@
 export const environment = {
   production: false,
   apiUrl: 'https://jsonplaceholder.typicode.com',
+  productUrlPlatiz: 'https://api.escuelajs.co/api/v1/products'
 };
 
