@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { dataImage } from 'src/app/shared/models/fakeData';
-import { JsonplaceholderService } from '../../../../services/jsonplaceholder.service';
-import { Posts } from 'src/app/shared/models/entities';
+
 
 @Component({
   selector: 'app-main',
@@ -10,23 +8,9 @@ import { Posts } from 'src/app/shared/models/entities';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private jsonplaceHolderService: JsonplaceholderService) { }
 
-  dataImage = dataImage;
-
-  posts: Posts[] = []
+  constructor() { }
 
   ngOnInit(): void {
-    this.getPosts()
-    console.log(this.posts)
   }
-
-  getPosts(): void {
-    this.jsonplaceHolderService.getPosts().subscribe((data) => {
-      const five = data.slice(0, 5)
-      this.posts.push(...five)
-    })
-  }
-
-
 }

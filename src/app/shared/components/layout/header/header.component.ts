@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedInfoService } from 'src/app/services/shared-info.service';
+import { SharedInfoService } from 'src/app/shared/services/shared-info.service';
 
 @Component({
   selector: 'app-header',

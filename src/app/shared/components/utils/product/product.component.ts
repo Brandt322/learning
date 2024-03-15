@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
-import { SharedInfoService } from 'src/app/services/shared-info.service';
+import { SharedInfoService } from 'src/app/shared/services/shared-info.service';
 import { Products } from 'src/app/shared/models/products';
 
 @Component({
